@@ -182,7 +182,7 @@ const TestimonialsSection = () => {
           </div>
         </AnimatedSection>
 
-        <div className="relative -mx-4 sm:mx-0 px-11 sm:px-12 md:px-14">
+        <div className="relative -mx-4 sm:mx-0 px-4 sm:px-12 md:px-14">
           <Carousel
             opts={{
               align: "start",
@@ -197,11 +197,11 @@ const TestimonialsSection = () => {
           >
             <CarouselPrevious
               variant="outline"
-              className="!left-0 top-[42%] -translate-y-1/2 z-10 h-10 w-10 rounded-full border-border bg-card/95 shadow-md backdrop-blur-sm hover:bg-card disabled:opacity-35"
+              className="hidden sm:inline-flex !left-0 top-[42%] -translate-y-1/2 z-10 h-10 w-10 rounded-full border-border bg-card/95 shadow-md backdrop-blur-sm hover:bg-card disabled:opacity-35"
             />
             <CarouselNext
               variant="outline"
-              className="!right-0 top-[42%] -translate-y-1/2 z-10 h-10 w-10 rounded-full border-border bg-card/95 shadow-md backdrop-blur-sm hover:bg-card disabled:opacity-35"
+              className="hidden sm:inline-flex !right-0 top-[42%] -translate-y-1/2 z-10 h-10 w-10 rounded-full border-border bg-card/95 shadow-md backdrop-blur-sm hover:bg-card disabled:opacity-35"
             />
             <CarouselContent className="-ml-3 sm:-ml-4 cursor-grab active:cursor-grabbing">
               {rows.map((row) => (

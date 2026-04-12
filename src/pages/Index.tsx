@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
@@ -24,6 +25,7 @@ const Index = () => {
       <ContactSection />
       <CTASection />
       <Footer />
+      <WhatsAppFloat />
     </div>
   );
 };
