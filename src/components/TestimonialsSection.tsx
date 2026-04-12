@@ -1,0 +1,393 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+import AnimatedSection from "./AnimatedSection";
+import { Star, MessageSquarePlus, List } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
+import { testimonials } from "@/data/testimonials";
+import type { Testimonial } from "@/data/testimonials";
+import {
+  appendUserFeedback,
+  loadUserFeedback,
+  type StoredFeedback,
+} from "@/lib/feedbackStorage";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselDots,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
+
+type ReviewRow = Testimonial & {
+  rowKey: string;
+  fromVisitor?: boolean;
+  submittedAt?: string;
+};
+
+function toRows(defaults: Testimonial[], extras: StoredFeedback[]): ReviewRow[] {
+  const featured: ReviewRow[] = defaults.map((t, i) => ({
+    ...t,
+    rowKey: `featured-${i}`,
+  }));
+  const visitor: ReviewRow[] = extras.map((t) => ({
+    name: t.name,
+    location: t.location,
+    rating: t.rating,
+    text: t.text,
+    rowKey: t.id,
+    fromVisitor: true,
+    submittedAt: t.submittedAt,
+  }));
+  return [...featured, ...visitor];
+}
+
+function ReviewCard({ row, onOpen }: { row: ReviewRow; onOpen: () => void }) {
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen();
+        }
+      }}
+      onClick={() => onOpen()}
+      className={cn(
+        "card-premium p-6 sm:p-8 flex flex-col h-full w-full max-w-[320px] mx-auto text-left",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background",
+        "cursor-pointer select-none",
+      )}
+      aria-label={`Open full review from ${row.name}`}
+    >
+      <div className="flex gap-1 mb-4 pointer-events-none">
+        {Array.from({ length: row.rating }).map((_, j) => (
+          <Star key={j} size={16} className="fill-primary text-primary" />
+        ))}
+      </div>
+      <p className="font-body text-sm text-muted-foreground leading-relaxed flex-1 mb-5 italic line-clamp-4 pointer-events-none">
+        &ldquo;{row.text}&rdquo;
+      </p>
+      <div className="pointer-events-none">
+        <p className="font-display text-sm font-semibold text-foreground">{row.name}</p>
+        <p className="font-body text-xs text-muted-foreground">{row.location}</p>
+        <p className="font-body text-xs text-primary mt-2 font-medium">Swipe or drag to browse · tap to read</p>
+      </div>
+    </div>
+  );
+}
+
+const TestimonialsSection = () => {
+  const [userFeedback, setUserFeedback] = useState<StoredFeedback[]>(() => loadUserFeedback());
+  const [addOpen, setAddOpen] = useState(false);
+  const [viewOpen, setViewOpen] = useState(false);
+  const [activeReview, setActiveReview] = useState<ReviewRow | null>(null);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setReduceMotion(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  const [formName, setFormName] = useState("");
+  const [formLocation, setFormLocation] = useState("");
+  const [formRating, setFormRating] = useState(5);
+  const [formText, setFormText] = useState("");
+
+  const rows = useMemo(() => toRows(testimonials, userFeedback), [userFeedback]);
+
+  const carouselPlugins = useMemo(() => {
+    if (rows.length < 2) return [];
+    return [
+      Autoplay({
+        delay: reduceMotion ? 7000 : 3000,
+        playOnInit: true,
+        stopOnMouseEnter: false,
+        stopOnInteraction: false,
+        stopOnFocusIn: false,
+      }),
+    ];
+  }, [reduceMotion, rows.length]);
+
+  const resetForm = useCallback(() => {
+    setFormName("");
+    setFormLocation("");
+    setFormRating(5);
+    setFormText("");
+  }, []);
+
+  const handleSubmitFeedback = (e: React.FormEvent) => {
+    e.preventDefault();
+    const name = formName.trim();
+    const text = formText.trim();
+    const location = formLocation.trim() || "Sri Lanka";
+    if (!name || !text) {
+      toast.error("Please add your name and a short message.");
+      return;
+    }
+    try {
+      const entry: Testimonial = {
+        name,
+        location,
+        rating: Math.min(5, Math.max(1, formRating)),
+        text,
+      };
+      const saved = appendUserFeedback(entry);
+      setUserFeedback((prev) => [...prev, saved]);
+      toast.success("Thanks — your feedback was saved on this device.");
+      resetForm();
+      setAddOpen(false);
+    } catch {
+      toast.error("Could not save feedback. Storage may be full or disabled.");
+    }
+  };
+
+  return (
+    <section id="reviews" className="section-padding bg-muted/50">
+      <div className="container-narrow mx-auto">
+        <AnimatedSection className="text-center mb-10">
+          <h2 className="heading-lg text-foreground mb-4">
+            What Our <span className="text-primary">Customers</span> Say
+          </h2>
+          <p className="text-body max-w-2xl mx-auto mb-8">
+            Real words from real people who've made Lingan Cream House a part of their lives. Reviews rotate
+            automatically — swipe or drag the cards (like an Instagram post), or use the arrows and dots. Tap a card to read the full story.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Button type="button" variant="default" className="gap-2" onClick={() => setAddOpen(true)}>
+              <MessageSquarePlus size={18} />
+              Add Feedback
+            </Button>
+            <Button type="button" variant="outline" className="gap-2" onClick={() => setViewOpen(true)}>
+              <List size={18} />
+              View all feedbacks
+            </Button>
+          </div>
+        </AnimatedSection>
+
+        <div className="relative -mx-4 sm:mx-0 px-11 sm:px-12 md:px-14">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: rows.length > 1,
+              skipSnaps: false,
+              dragFree: false,
+              watchDrag: true,
+              dragThreshold: 8,
+            }}
+            plugins={carouselPlugins}
+            className="w-full"
+          >
+            <CarouselPrevious
+              variant="outline"
+              className="!left-0 top-[42%] -translate-y-1/2 z-10 h-10 w-10 rounded-full border-border bg-card/95 shadow-md backdrop-blur-sm hover:bg-card disabled:opacity-35"
+            />
+            <CarouselNext
+              variant="outline"
+              className="!right-0 top-[42%] -translate-y-1/2 z-10 h-10 w-10 rounded-full border-border bg-card/95 shadow-md backdrop-blur-sm hover:bg-card disabled:opacity-35"
+            />
+            <CarouselContent className="-ml-3 sm:-ml-4 cursor-grab active:cursor-grabbing">
+              {rows.map((row) => (
+                <CarouselItem
+                  key={row.rowKey}
+                  className="pl-3 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
+                >
+                  <ReviewCard row={row} onOpen={() => setActiveReview(row)} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselDots className="pb-1" />
+          </Carousel>
+        </div>
+      </div>
+
+      <Dialog
+        open={addOpen}
+        onOpenChange={(open) => {
+          setAddOpen(open);
+          if (!open) resetForm();
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add feedback</DialogTitle>
+            <DialogDescription>
+              Share a few words about your visit. This is saved only in your browser on this device.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmitFeedback} className="grid gap-4 pt-2">
+            <div className="grid gap-2">
+              <Label htmlFor="fb-name">Name</Label>
+              <Input
+                id="fb-name"
+                value={formName}
+                onChange={(e) => setFormName(e.target.value)}
+                placeholder="Your name"
+                autoComplete="name"
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="fb-location">Town / city (optional)</Label>
+              <Input
+                id="fb-location"
+                value={formLocation}
+                onChange={(e) => setFormLocation(e.target.value)}
+                placeholder="e.g. Jaffna"
+                autoComplete="address-level2"
+              />
+            </div>
+            <div className="grid gap-2">
+              <span className="text-sm font-medium leading-none">Rating</span>
+              <div className="flex gap-1" role="group" aria-label="Star rating">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    className="p-1 rounded-md hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    onClick={() => setFormRating(n)}
+                    aria-label={`${n} star${n > 1 ? "s" : ""}`}
+                  >
+                    <Star
+                      size={28}
+                      className={n <= formRating ? "fill-primary text-primary" : "text-muted-foreground/40"}
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="fb-text">Your message</Label>
+              <Textarea
+                id="fb-text"
+                value={formText}
+                onChange={(e) => setFormText(e.target.value)}
+                placeholder="What did you enjoy?"
+                rows={4}
+                required
+                className="resize-none"
+              />
+            </div>
+            <DialogFooter className="gap-2 sm:gap-0">
+              <Button type="button" variant="outline" onClick={() => setAddOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit">Submit feedback</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={activeReview !== null}
+        onOpenChange={(open) => {
+          if (!open) setActiveReview(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-lg">
+          {activeReview && (
+            <>
+              <DialogHeader className="text-left space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex gap-1">
+                    {Array.from({ length: activeReview.rating }).map((_, j) => (
+                      <Star key={j} size={18} className="fill-primary text-primary" />
+                    ))}
+                  </div>
+                  {activeReview.fromVisitor ? (
+                    <span className="text-xs font-body text-muted-foreground">
+                      Visitor
+                      {activeReview.submittedAt
+                        ? ` · ${new Date(activeReview.submittedAt).toLocaleDateString(undefined, {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}`
+                        : null}
+                    </span>
+                  ) : (
+                    <span className="text-xs font-body text-muted-foreground">Featured</span>
+                  )}
+                </div>
+                <DialogTitle className="font-display text-2xl leading-tight pr-8">
+                  {activeReview.name}
+                </DialogTitle>
+                <p className="font-body text-sm text-muted-foreground">{activeReview.location}</p>
+                <DialogDescription asChild>
+                  <p className="font-body text-base leading-relaxed text-muted-foreground italic pt-2">
+                    &ldquo;{activeReview.text}&rdquo;
+                  </p>
+                </DialogDescription>
+              </DialogHeader>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={viewOpen} onOpenChange={setViewOpen}>
+        <DialogContent className="sm:max-w-2xl max-h-[85vh] flex flex-col">
+          <DialogHeader>
+            <DialogTitle>All feedback</DialogTitle>
+            <DialogDescription>
+              Featured stories and submissions saved on this device ({rows.length} {rows.length === 1 ? "review" : "reviews"}).
+            </DialogDescription>
+          </DialogHeader>
+          <div className="overflow-y-auto pr-1 -mr-1 space-y-4 min-h-0 flex-1 scrollbar-none">
+            {rows.map((row) => (
+              <div
+                key={row.rowKey}
+                className="rounded-xl border border-border/60 bg-card p-5 shadow-[var(--shadow-soft)]"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <div className="flex gap-1">
+                    {Array.from({ length: row.rating }).map((_, j) => (
+                      <Star key={j} size={14} className="fill-primary text-primary" />
+                    ))}
+                  </div>
+                  {row.fromVisitor ? (
+                    <span className="text-xs font-body text-muted-foreground">
+                      Visitor
+                      {row.submittedAt
+                        ? ` · ${new Date(row.submittedAt).toLocaleDateString(undefined, {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}`
+                        : null}
+                    </span>
+                  ) : (
+                    <span className="text-xs font-body text-muted-foreground">Featured</span>
+                  )}
+                </div>
+                <p className="font-body text-sm text-muted-foreground leading-relaxed italic mb-4">
+                  &ldquo;{row.text}&rdquo;
+                </p>
+                <p className="font-display text-sm font-semibold text-foreground">{row.name}</p>
+                <p className="font-body text-xs text-muted-foreground">{row.location}</p>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </section>
+  );
+};
+
+export default TestimonialsSection;

@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@layer base {
+  :root {
+    --background: 36 33% 97%;
+    --foreground: 25 20% 16%;
+
+    --card: 36 30% 99%;
+    --card-foreground: 25 20% 16%;
+
+    --popover: 36 30% 99%;
+    --popover-foreground: 25 20% 16%;
+
+    --primary: 36 72% 48%;
+    --primary-foreground: 36 33% 97%;
+
+    --secondary: 25 45% 22%;
+    --secondary-foreground: 36 33% 97%;
+
+    --muted: 36 25% 92%;
+    --muted-foreground: 25 12% 45%;
+
+    --accent: 345 55% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 36 20% 88%;
+    --input: 36 20% 88%;
+    --ring: 36 72% 48%;
+
+    --radius: 0.75rem;
+
+    --gold: 36 72% 48%;
+    --gold-light: 36 60% 70%;
+    --gold-glow: 36 80% 55%;
+    --cream: 36 33% 97%;
+    --cream-dark: 36 25% 92%;
+    --chocolate: 25 45% 22%;
+    --chocolate-light: 25 30% 35%;
+    --rose: 345 55% 55%;
+    --rose-light: 345 45% 75%;
+    --mint: 160 35% 50%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(25 45% 22%), hsl(25 30% 30%));
+    --gradient-gold: linear-gradient(135deg, hsl(36 72% 48%), hsl(36 80% 55%));
+    --gradient-warm: linear-gradient(180deg, hsl(36 33% 97%), hsl(36 25% 92%));
+    --shadow-soft: 0 4px 20px -4px hsl(25 45% 22% / 0.08);
+    --shadow-card: 0 8px 30px -8px hsl(25 45% 22% / 0.1);
+    --shadow-elevated: 0 16px 50px -12px hsl(25 45% 22% / 0.15);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@keyframes btn-gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased overflow-x-hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24;
+  }
+  .container-narrow {
+    @apply max-w-6xl mx-auto;
+  }
+  .container-wide {
+    @apply max-w-7xl mx-auto;
+  }
+  .heading-xl {
+    @apply text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight tracking-tight;
+  }
+  .heading-lg {
+    @apply text-3xl sm:text-4xl font-display font-bold leading-tight;
+  }
+  .heading-md {
+    @apply text-2xl sm:text-3xl font-display font-semibold leading-snug;
+  }
+  .text-body {
+    @apply text-base sm:text-lg font-body leading-relaxed text-muted-foreground;
+  }
+  .card-premium {
+    @apply bg-card rounded-2xl shadow-[var(--shadow-card)] border border-border/50 overflow-hidden transition-all duration-300 hover:shadow-[var(--shadow-elevated)] hover:-translate-y-1;
+  }
+  .badge-heritage {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-body text-sm font-medium;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--gold-glow)), hsl(var(--rose)));
+  }
+
+  /* Gradient buttons — animated multi-stop fill */
+  .btn-gradient,
+  .btn-primary,
+  .btn-ui-gradient {
+    background-image: linear-gradient(
+      92deg,
+      hsl(var(--gold)) 0%,
+      hsl(var(--gold-glow)) 22%,
+      hsl(var(--rose-light)) 50%,
+      hsl(var(--gold-glow)) 78%,
+      hsl(var(--gold)) 100%
+    );
+    background-size: 280% 100%;
+    animation: btn-gradient-shift 5.5s ease-in-out infinite;
+  }
+
+  .btn-gradient,
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-body font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] text-primary-foreground;
+  }
+
+  .btn-gradient:hover,
+  .btn-primary:hover,
+  .btn-ui-gradient:hover {
+    filter: brightness(1.07);
+    animation-duration: 3s;
+  }
+
+  .btn-gradient:active,
+  .btn-primary:active,
+  .btn-ui-gradient:active {
+    filter: brightness(0.98);
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-secondary text-secondary-foreground font-body font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border-2 border-primary text-primary font-body font-semibold text-sm transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:scale-[1.02] active:scale-[0.98];
+  }
+  .btn-outline-hero {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-primary-foreground font-body font-semibold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-sm;
+    border: 2px solid hsl(var(--primary-foreground) / 0.42);
+    background-image: linear-gradient(
+      92deg,
+      hsl(var(--gold) / 0.48),
+      hsl(var(--gold-glow) / 0.4),
+      hsl(var(--rose-light) / 0.36),
+      hsl(var(--gold-glow) / 0.4),
+      hsl(var(--gold) / 0.48)
+    );
+    background-size: 280% 100%;
+    animation: btn-gradient-shift 6.5s ease-in-out infinite;
+  }
+  .btn-outline-hero:hover {
+    filter: brightness(1.12);
+    animation-duration: 3.25s;
+    border-color: hsl(var(--primary-foreground) / 0.58);
+  }
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-[hsl(var(--mint))] text-white font-body font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-gradient,
+  .btn-primary,
+  .btn-ui-gradient,
+  .btn-outline-hero {
+    animation: none;
+    background-size: 100% 100%;
+  }
+}
+
+@layer utilities {
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
