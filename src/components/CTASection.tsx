@@ -1,5 +1,6 @@
 import AnimatedSection from "./AnimatedSection";
 import { MapPin } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 
 const CTASection = () => {
   return (
@@ -22,8 +23,9 @@ const CTASection = () => {
               href="https://wa.me/94212223456?text=Hi%20Lingan%20Cream%20House!"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-whatsapp"
+              className="btn-whatsapp gap-2"
             >
+              <WhatsAppIcon className="h-4 w-4" />
               WhatsApp Us
             </a>
           </div>

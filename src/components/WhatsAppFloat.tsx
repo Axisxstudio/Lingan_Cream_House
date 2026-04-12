@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { MessageCircle, X } from "lucide-react";
+import { X } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 
 const WHATSAPP_HREF =
   "https://wa.me/94212223456?text=Hi%20Lingan%20Cream%20House!%20I'd%20like%20to%20know%20more%20about%20your%20menu.";
@@ -61,7 +62,7 @@ const WhatsAppFloat = () => {
         whileHover={reduceMotion ? undefined : { scale: 1.08 }}
         whileTap={reduceMotion ? undefined : { scale: 0.94 }}
       >
-        <MessageCircle className="relative z-[1] h-7 w-7" strokeWidth={2} />
+        <WhatsAppIcon className="relative z-[1] h-8 w-8 text-white" />
       </motion.a>
     </div>
   );

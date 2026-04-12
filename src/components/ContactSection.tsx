@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AnimatedSection from "./AnimatedSection";
-import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -86,7 +87,7 @@ const ContactSection = () => {
               rel="noopener noreferrer"
               className="btn-whatsapp w-full justify-center"
             >
-              <MessageCircle size={18} />
+              <WhatsAppIcon className="h-[18px] w-[18px]" />
               Chat on WhatsApp
             </a>
           </AnimatedSection>
