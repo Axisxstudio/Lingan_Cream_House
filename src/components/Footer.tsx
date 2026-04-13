@@ -208,6 +208,17 @@ const Footer = () => {
             <p className="font-body text-sm opacity-50">
               © {new Date().getFullYear()} Lingan Cream House. All rights reserved. Branches in Sri Lanka & Canada.
             </p>
+            <p className="mt-2 font-body text-xs opacity-60">
+              Designed &amp; Developed by{" "}
+              <a
+                href="https://axisxstudio.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-background/85 transition-opacity hover:opacity-100 hover:underline underline-offset-4"
+              >
+                AxisX Studio
+              </a>
+            </p>
           </motion.div>
         </div>
       </div>

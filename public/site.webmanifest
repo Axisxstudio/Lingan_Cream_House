@@ -1,0 +1,21 @@
+{
+  "name": "Lingan Cream House",
+  "short_name": "Lingan",
+  "description": "Premium ice cream, desserts, and milkshakes since 1970.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5fbf7",
+  "theme_color": "#2f9f69",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

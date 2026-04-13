@@ -6,6 +6,19 @@ const NotFound = () => {
 
   useEffect(() => {
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
+
+    const prevTitle = document.title;
+    document.title = "404 — Page Not Found | Lingan Cream House";
+
+    const robots = document.createElement("meta");
+    robots.name = "robots";
+    robots.content = "noindex, nofollow";
+    document.head.appendChild(robots);
+
+    return () => {
+      document.title = prevTitle;
+      robots.remove();
+    };
   }, [location.pathname]);
 
   return (
