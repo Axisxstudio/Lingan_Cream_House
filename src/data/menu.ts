@@ -116,7 +116,7 @@ export const menuCategories: MenuCategory[] = [
       { name: "Iced Coffee", description: "Cold brew coffee with milk and ice", price: "Rs. 320", image: icedCoffeeImg },
       { name: "Virgin Mojito", description: "Mint, lime, and soda refresher", price: "Rs. 300", image: mojitoImg },
       { name: "Passion Fruit Juice", description: "Tangy passion fruit blended fresh", price: "Rs. 290", image: passionfruitJuiceImg },
-      { name: "Coconut Water", description: "Fresh king coconut from Jaffna", price: "Rs. 180", image: coconutWaterImg },
+      { name: "Coconut Water", description: "Fresh king coconut", price: "Rs. 180", image: coconutWaterImg },
       { name: "Mixed Fruit Juice", description: "Seasonal fruits blended together", price: "Rs. 300", image: mixedfruitJuiceImg },
     ],
   },

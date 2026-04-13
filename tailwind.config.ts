@@ -69,6 +69,10 @@ export default {
           light: "hsl(var(--rose-light))",
         },
         mint: "hsl(var(--mint))",
+        surface: {
+          cta: "hsl(var(--surface-cta))",
+          footer: "hsl(var(--surface-footer))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -106,6 +110,21 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        "drift": {
+          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
+          "25%": { transform: "translate(12px, -10px) scale(1.04)" },
+          "50%": { transform: "translate(-8px, 8px) scale(0.97)" },
+          "75%": { transform: "translate(6px, 6px) scale(1.02)" },
+        },
+        "drift-reverse": {
+          "0%, 100%": { transform: "translate(0, 0)" },
+          "33%": { transform: "translate(-14px, 10px)" },
+          "66%": { transform: "translate(10px, -12px)" },
+        },
+        "pulse-soft": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.88" },
+        },
         "scale-in": {
           "0%": { opacity: "0", transform: "scale(0.9)" },
           "100%": { opacity: "1", transform: "scale(1)" },
@@ -125,6 +144,9 @@ export default {
         "fade-up": "fade-up 0.6s ease-out forwards",
         "fade-in": "fade-in 0.5s ease-out forwards",
         "float": "float 3s ease-in-out infinite",
+        "drift": "drift 22s ease-in-out infinite",
+        "drift-reverse": "drift-reverse 26s ease-in-out infinite",
+        "pulse-soft": "pulse-soft 10s ease-in-out infinite",
         "scale-in": "scale-in 0.4s ease-out forwards",
         "marquee-x": "marquee-x 55s linear infinite",
         "typing-cursor": "typing-cursor 1s step-end infinite",

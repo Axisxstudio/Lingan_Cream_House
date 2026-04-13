@@ -1,58 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
-
 @layer base {
   :root {
-    --background: 36 33% 97%;
-    --foreground: 25 20% 16%;
+    /* Base: soft porcelain with cool sage undertone (luxury light green) */
+    --background: 150 38% 98%;
+    --foreground: 156 28% 14%;
 
-    --card: 36 30% 99%;
-    --card-foreground: 25 20% 16%;
+    --card: 148 42% 99%;
+    --card-foreground: 156 28% 14%;
 
-    --popover: 36 30% 99%;
-    --popover-foreground: 25 20% 16%;
+    --popover: 148 42% 99%;
+    --popover-foreground: 156 28% 14%;
 
-    --primary: 36 72% 48%;
-    --primary-foreground: 36 33% 97%;
+    --primary: 152 58% 38%;
+    --primary-foreground: 150 40% 99%;
 
-    --secondary: 25 45% 22%;
-    --secondary-foreground: 36 33% 97%;
+    --secondary: 154 32% 22%;
+    --secondary-foreground: 150 40% 99%;
 
-    --muted: 36 25% 92%;
-    --muted-foreground: 25 12% 45%;
+    --muted: 152 24% 94%;
+    --muted-foreground: 156 14% 38%;
 
-    --accent: 345 55% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 158 36% 42%;
+    --accent-foreground: 156 35% 10%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 36 20% 88%;
-    --input: 36 20% 88%;
-    --ring: 36 72% 48%;
+    --border: 152 18% 87%;
+    --input: 152 18% 87%;
+    --ring: 152 58% 38%;
 
     --radius: 0.75rem;
 
-    --gold: 36 72% 48%;
-    --gold-light: 36 60% 70%;
-    --gold-glow: 36 80% 55%;
-    --cream: 36 33% 97%;
-    --cream-dark: 36 25% 92%;
-    --chocolate: 25 45% 22%;
-    --chocolate-light: 25 30% 35%;
-    --rose: 345 55% 55%;
-    --rose-light: 345 45% 75%;
-    --mint: 160 35% 50%;
+    /* Brand greens */
+    --gold: 152 58% 38%;
+    --gold-light: 152 38% 78%;
+    --gold-glow: 154 50% 48%;
+    --cream: 150 38% 98%;
+    --cream-dark: 152 28% 93%;
+    --chocolate: 156 35% 18%;
+    --chocolate-light: 154 28% 28%;
+    --rose: 158 32% 44%;
+    --rose-light: 152 28% 88%;
+    --mint: 156 42% 44%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(25 45% 22%), hsl(25 30% 30%));
-    --gradient-gold: linear-gradient(135deg, hsl(36 72% 48%), hsl(36 80% 55%));
-    --gradient-warm: linear-gradient(180deg, hsl(36 33% 97%), hsl(36 25% 92%));
-    --shadow-soft: 0 4px 20px -4px hsl(25 45% 22% / 0.08);
-    --shadow-card: 0 8px 30px -8px hsl(25 45% 22% / 0.1);
-    --shadow-elevated: 0 16px 50px -12px hsl(25 45% 22% / 0.15);
+    /* Dark green bands (CTA, footer) */
+    --surface-cta: 156 42% 14%;
+    --surface-footer: 158 48% 7%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(154 38% 18%), hsl(158 32% 24%));
+    --gradient-gold: linear-gradient(135deg, hsl(152 58% 38%), hsl(156 48% 46%));
+    --gradient-warm: linear-gradient(180deg, hsl(150 38% 98%), hsl(154 28% 93%));
+    --shadow-soft: 0 6px 24px -8px hsl(152 40% 18% / 0.12);
+    --shadow-card: 0 14px 38px -14px hsl(152 35% 20% / 0.16);
+    --shadow-elevated: 0 24px 62px -20px hsl(154 38% 16% / 0.2);
+    --shadow-glow: 0 0 40px -8px hsl(152 58% 48% / 0.18);
+    --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -65,38 +73,104 @@
   }
 }
 
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
 @keyframes btn-gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
 }
 
+@keyframes hero-mesh-breathe {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.93; }
+}
+
+@keyframes hero-sheen-shift {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.84; }
+}
+
+/* Floating drift for hero orbs */
+@keyframes orb-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(18px, -22px) scale(1.06); }
+  66%  { transform: translate(-14px, 12px) scale(0.96); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes orb-drift-reverse {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(-20px, 18px) scale(1.05); }
+  66%  { transform: translate(16px, -12px) scale(0.97); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes orb-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-18px) scale(1.04); }
+}
+
+/* Luxury shimmer sweep across section surfaces */
+@keyframes shimmer-sweep {
+  0%   { transform: translateX(-100%) skewX(-15deg); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: translateX(220%) skewX(-15deg); opacity: 0; }
+}
+
+/* Section orb pulse */
+@keyframes section-orb-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%       { opacity: 0.8;  transform: scale(1.12); }
+}
+
+/* Spin particle */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Fade-in up (utility for JS-free elements) */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Glow pulse for nav scrolled state */
+@keyframes nav-glow-pulse {
+  0%, 100% { box-shadow: 0 10px 40px -12px hsl(152 35% 18% / 0.10); }
+  50%       { box-shadow: 0 10px 48px -10px hsl(152 50% 30% / 0.18); }
+}
+
+/* ============================================================
+   BASE LAYER
+   ============================================================ */
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
   body {
     @apply bg-background text-foreground font-body antialiased overflow-x-hidden;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
-  }
+  h1, h2, h3, h4, h5, h6 { @apply font-display; }
 }
 
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
 @layer components {
+
+  /* ─── Layout Helpers ─────────────────────────────────────── */
   .section-padding {
     @apply px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24;
   }
   .container-narrow {
-    @apply max-w-6xl mx-auto;
+    @apply max-w-6xl mx-auto rounded-2xl;
+    box-shadow: var(--shadow-soft);
   }
   .container-wide {
-    @apply max-w-7xl mx-auto;
+    @apply max-w-7xl mx-auto rounded-2xl;
+    box-shadow: var(--shadow-soft);
   }
+
+  /* ─── Typography ─────────────────────────────────────────── */
   .heading-xl {
     @apply text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight tracking-tight;
   }
@@ -109,68 +183,380 @@
   .text-body {
     @apply text-base sm:text-lg font-body leading-relaxed text-muted-foreground;
   }
+
+  /* ─── Card ───────────────────────────────────────────────── */
   .card-premium {
-    @apply bg-card rounded-2xl shadow-[var(--shadow-card)] border border-border/50 overflow-hidden transition-all duration-300 hover:shadow-[var(--shadow-elevated)] hover:-translate-y-1;
+    @apply bg-card rounded-2xl shadow-[var(--shadow-card)] border border-primary/[0.08]
+           overflow-hidden transition-all duration-300
+           hover:shadow-[var(--shadow-elevated)] hover:-translate-y-1 hover:border-primary/15;
   }
+  .section-heading-premium {
+    @apply heading-lg mb-4 bg-clip-text text-transparent;
+    letter-spacing: -0.015em;
+    background-image: linear-gradient(
+      130deg,
+      hsl(158 42% 30%) 0%,
+      hsl(var(--gold)) 35%,
+      hsl(var(--gold-glow)) 65%,
+      hsl(var(--mint)) 100%
+    );
+  }
+  .premium-panel {
+    @apply rounded-2xl border border-primary/10 bg-card/85 backdrop-blur-md;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* ─── Section Backgrounds ────────────────────────────────── */
+
+  /* About — soft ivory-sage with left radial bloom */
+  .section-luxury-about {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse 70% 55% at 0% 50%, hsl(152 46% 92% / 0.7), transparent 62%),
+      linear-gradient(168deg,
+        hsl(149 46% 98.8%) 0%,
+        hsl(152 38% 96.5%) 40%,
+        hsl(155 30% 94%)   100%
+      );
+    box-shadow: inset 0 1px 0 hsl(149 50% 100% / 0.9);
+  }
+  .section-luxury-about::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 50% 40% at 100% 100%, hsl(158 36% 90% / 0.45), transparent 60%);
+  }
+
+  /* Signature — pearl-sage with shimmer orbs */
+  .section-luxury-signature {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse 80% 58% at 85% 10%, hsl(152 44% 95% / 0.8), transparent 60%),
+      linear-gradient(162deg,
+        hsl(148 48% 99.2%)   0%,
+        hsl(151 36% 97.5%) 45%,
+        hsl(155 28% 94.5%) 100%
+      );
+    box-shadow: inset 0 1px 0 hsl(152 45% 100% / 0.92);
+    overflow: hidden;
+  }
+  /* Shimmer sweep */
+  .section-luxury-signature::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 35%, hsl(150 60% 96% / 0.55) 50%, transparent 65%);
+    animation: shimmer-sweep 10s ease-in-out infinite;
+  }
+
+  /* Menu — layered aqua-sage tiles with depth orbs */
+  .section-luxury-menu {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse 65% 50% at 15% 80%, hsl(154 40% 93% / 0.65), transparent 58%),
+      radial-gradient(ellipse 55% 42% at 88% 18%, hsl(150 44% 95% / 0.58), transparent 55%),
+      linear-gradient(178deg,
+        hsl(153 32% 97.5%) 0%,
+        hsl(150 36% 95%)   50%,
+        hsl(154 28% 93%)   100%
+      );
+    box-shadow: inset 0 1px 0 hsl(150 44% 99% / 0.88);
+  }
+
+  /* Why Choose Us — clean mint-sage with dual radials */
+  .section-luxury-why {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse 72% 60% at 50% 0%, hsl(155 40% 95% / 0.6), transparent 65%),
+      linear-gradient(182deg,
+        hsl(155 36% 97.8%) 0%,
+        hsl(152 28% 95.5%) 50%,
+        hsl(150 24% 93.2%) 100%
+      );
+    box-shadow: inset 0 1px 0 hsl(155 42% 99% / 0.85);
+  }
+  .section-luxury-why::before {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    pointer-events: none;
+    background: linear-gradient(to top, hsl(152 32% 94% / 0.5), transparent);
+  }
+
+  /* Gallery — cool crystal-sage */
+  .section-luxury-gallery {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse 60% 48% at 90% 90%, hsl(152 40% 94% / 0.58), transparent 56%),
+      radial-gradient(ellipse 50% 40% at 8% 5%,  hsl(149 46% 97% / 0.55), transparent 55%),
+      linear-gradient(188deg,
+        hsl(151 40% 98%)   0%,
+        hsl(154 30% 96%)   48%,
+        hsl(156 22% 93%)   100%
+      );
+    box-shadow: inset 0 1px 0 hsl(151 40% 99% / 0.85);
+    overflow: hidden;
+  }
+  /* Soft rotating glow orb */
+  .section-luxury-gallery::after {
+    content: "";
+    position: absolute;
+    width: 480px; height: 480px;
+    top: -120px; right: -120px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, hsl(152 50% 88% / 0.35), transparent 70%);
+    animation: section-orb-pulse 14s ease-in-out infinite;
+  }
+
+  /* Reviews — warm sage with iridescent shift */
+  .section-luxury-reviews {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse 78% 58% at 30% 100%, hsl(158 32% 93% / 0.55), transparent 60%),
+      linear-gradient(192deg,
+        hsl(152 38% 98%)   0%,
+        hsl(156 28% 95.5%) 55%,
+        hsl(160 22% 92.8%) 100%
+      );
+    box-shadow: inset 0 1px 0 hsl(158 34% 99% / 0.8);
+  }
+
+  /* Contact — luminous sage-ivory */
+  .section-luxury-contact {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse 65% 50% at 50% 0%, hsl(150 44% 97% / 0.68), transparent 58%),
+      linear-gradient(174deg,
+        hsl(148 44% 99.2%) 0%,
+        hsl(152 34% 96.8%) 50%,
+        hsl(155 28% 94.5%) 100%
+      );
+    box-shadow: inset 0 1px 0 hsl(148 48% 100% / 0.92);
+  }
+  .section-luxury-contact::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 55% 38% at 100% 100%, hsl(155 36% 93% / 0.38), transparent 60%);
+  }
+
+  /* CTA — deep luxury evergreen */
+  .section-luxury-cta {
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(
+      148deg,
+      hsl(156 44% 15%)  0%,
+      hsl(154 48% 11%)  42%,
+      hsl(158 52% 7.5%) 100%
+    );
+    color: hsl(var(--primary-foreground));
+    box-shadow: inset 0 1px 0 hsl(152 40% 40% / 0.22);
+    overflow: hidden;
+  }
+  .section-luxury-cta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 95% 65% at 18% 0%, hsl(152 48% 42% / 0.28), transparent 58%),
+      radial-gradient(ellipse 60% 50% at 85% 100%, hsl(158 44% 36% / 0.22), transparent 62%);
+  }
+  /* CTA shimmer */
+  .section-luxury-cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(105deg, transparent 30%, hsl(152 50% 60% / 0.06) 50%, transparent 70%);
+    animation: shimmer-sweep 12s ease-in-out infinite;
+  }
+  .section-luxury-cta > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── Floating Orbs (reusable inside sections) ───────────── */
+  .section-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(1px);
+  }
+  .section-orb-lg {
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, hsl(152 50% 88% / 0.38), transparent 70%);
+    animation: orb-drift 22s ease-in-out infinite;
+  }
+  .section-orb-md {
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, hsl(155 44% 90% / 0.3), transparent 70%);
+    animation: orb-drift-reverse 18s ease-in-out infinite;
+  }
+  .section-orb-sm {
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, hsl(150 52% 86% / 0.35), transparent 70%);
+    animation: orb-float 12s ease-in-out infinite;
+  }
+
+  /* ─── Navbar ─────────────────────────────────────────────── */
+  .nav-glass-luxury {
+    background: hsl(150 38% 98% / 0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid hsl(152 22% 88% / 0.6);
+    animation: nav-glow-pulse 8s ease-in-out infinite;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* ─── Badge ──────────────────────────────────────────────── */
   .badge-heritage {
     @apply inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-body text-sm font-medium;
+    box-shadow: 0 0 0 1px hsl(152 40% 78% / 0.4), inset 0 1px 0 hsl(152 60% 96% / 0.6);
   }
 
-  /* Gradient text */
+  /* ─── Hero Backdrops ─────────────────────────────────────── */
+  .hero-backdrop-mesh {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 110% 90% at 90% 6%,  hsl(152 58% 46% / 0.22), transparent 58%),
+      radial-gradient(ellipse 95%  80% at -8% 92%, hsl(152 44% 9% / 0.9),  transparent 54%),
+      radial-gradient(ellipse 70%  50% at 70% 100%, hsl(158 38% 16% / 0.55), transparent 62%),
+      linear-gradient(
+        122deg,
+        hsl(152 52% 5%  / 0.98) 0%,
+        hsl(152 48% 8%  / 0.96) 7%,
+        hsl(152 44% 12% / 0.93) 18%,
+        hsl(152 40% 16% / 0.88) 32%,
+        hsl(154 38% 21% / 0.76) 48%,
+        hsl(160 38% 28% / 0.58) 64%,
+        hsl(168 36% 36% / 0.42) 80%,
+        hsl(172 34% 42% / 0.3)  100%
+      );
+  }
+  .hero-backdrop-sheen {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      185deg,
+      hsl(152 20% 98% / 0.1) 0%,
+      transparent 32%,
+      transparent 58%,
+      hsl(152 45% 6% / 0.45) 100%
+    );
+    mix-blend-mode: soft-light;
+  }
+  .hero-backdrop-brand {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: hsl(var(--primary) / 0.22);
+    mix-blend-mode: color;
+  }
+  .hero-backdrop-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow:
+      inset 0 0 160px 60px hsl(152 48% 4% / 0.38),
+      inset 0 30% 100px -30px hsl(152 42% 6% / 0.22);
+  }
+
+  /* ─── Gradient Text ──────────────────────────────────────── */
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--gold-glow)), hsl(var(--rose)));
+    background-image: linear-gradient(
+      125deg,
+      hsl(158 42% 32%) 0%,
+      hsl(var(--gold)) 38%,
+      hsl(var(--gold-glow)) 62%,
+      hsl(var(--mint)) 100%
+    );
+  }
+  .hero-gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--gold-light)) 0%,
+      hsl(var(--gold-glow)) 45%,
+      hsl(var(--mint)) 100%
+    );
   }
 
-  /* Gradient buttons — animated multi-stop fill */
+  /* ─── Buttons ────────────────────────────────────────────── */
   .btn-gradient,
   .btn-primary,
   .btn-ui-gradient {
     background-image: linear-gradient(
       92deg,
-      hsl(var(--gold)) 0%,
-      hsl(var(--gold-glow)) 22%,
-      hsl(var(--rose-light)) 50%,
-      hsl(var(--gold-glow)) 78%,
+      hsl(160 48% 32%) 0%,
+      hsl(var(--gold)) 20%,
+      hsl(var(--gold-glow)) 50%,
+      hsl(var(--gold-light)) 72%,
       hsl(var(--gold)) 100%
     );
     background-size: 280% 100%;
     animation: btn-gradient-shift 5.5s ease-in-out infinite;
   }
-
   .btn-gradient,
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-body font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] text-primary-foreground;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl
+           font-body font-semibold text-sm transition-all duration-300
+           hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] text-primary-foreground;
   }
-
   .btn-gradient:hover,
   .btn-primary:hover,
   .btn-ui-gradient:hover {
     filter: brightness(1.07);
     animation-duration: 3s;
   }
-
   .btn-gradient:active,
   .btn-primary:active,
   .btn-ui-gradient:active {
     filter: brightness(0.98);
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-secondary text-secondary-foreground font-body font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl
+           bg-secondary text-secondary-foreground font-body font-semibold text-sm
+           transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
   }
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border-2 border-primary text-primary font-body font-semibold text-sm transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:scale-[1.02] active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl
+           border-2 border-primary text-primary font-body font-semibold text-sm
+           transition-all duration-300 hover:bg-primary hover:text-primary-foreground
+           hover:scale-[1.02] active:scale-[0.98];
   }
   .btn-outline-hero {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-primary-foreground font-body font-semibold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-sm;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl
+           text-primary-foreground font-body font-semibold text-sm
+           transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-sm;
     border: 2px solid hsl(var(--primary-foreground) / 0.42);
     background-image: linear-gradient(
       92deg,
-      hsl(var(--gold) / 0.48),
-      hsl(var(--gold-glow) / 0.4),
-      hsl(var(--rose-light) / 0.36),
-      hsl(var(--gold-glow) / 0.4),
-      hsl(var(--gold) / 0.48)
+      hsl(var(--gold)       / 0.48),
+      hsl(var(--gold-glow)  / 0.40),
+      hsl(var(--gold-light) / 0.38),
+      hsl(var(--gold-glow)  / 0.40),
+      hsl(var(--gold)       / 0.48)
     );
     background-size: 280% 100%;
     animation: btn-gradient-shift 6.5s ease-in-out infinite;
@@ -181,15 +567,27 @@
     border-color: hsl(var(--primary-foreground) / 0.58);
   }
   .btn-whatsapp {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-[hsl(var(--mint))] text-white font-body font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl
+           bg-[hsl(var(--mint))] text-white font-body font-semibold text-sm
+           transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
   }
 }
 
+/* ============================================================
+   GLOBAL
+   ============================================================ */
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
+/* Hero animations */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-backdrop-mesh  { animation: hero-mesh-breathe  16s ease-in-out infinite alternate; }
+  .hero-backdrop-sheen { animation: hero-sheen-shift   20s ease-in-out infinite alternate-reverse; }
+}
+
+/* Reduce-motion overrides */
 @media (prefers-reduced-motion: reduce) {
   .btn-gradient,
   .btn-primary,
@@ -198,8 +596,20 @@ html {
     animation: none;
     background-size: 100% 100%;
   }
+  .section-luxury-signature::after,
+  .section-luxury-cta::after,
+  .section-luxury-gallery::after {
+    animation: none;
+  }
+  .section-orb-lg,
+  .section-orb-md,
+  .section-orb-sm { animation: none; }
+  .nav-glass-luxury { animation: none; }
 }
 
+/* ============================================================
+   UTILITIES
+   ============================================================ */
 @layer utilities {
   .scrollbar-none {
     -ms-overflow-style: none;
@@ -210,4 +620,9 @@ html {
     width: 0;
     height: 0;
   }
+  .animate-drift         { animation: orb-drift         26s ease-in-out infinite; }
+  .animate-drift-reverse { animation: orb-drift-reverse  20s ease-in-out infinite; }
+  .animate-float         { animation: orb-float          14s ease-in-out infinite; }
+  .animate-spin-slow     { animation: spin-slow          30s linear infinite; }
+  .animate-fade-up       { animation: fade-up 0.65s var(--ease-out-expo, cubic-bezier(0.22,1,0.36,1)) both; }
 }
