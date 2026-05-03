@@ -255,7 +255,13 @@ const Navbar = () => {
             {/* Mobile Hamburger */}
             <div className="relative flex items-center gap-1 md:hidden">
               <motion.button
-                onClick={() => setMobileQuickBranchesOpen((prev) => !prev)}
+                onClick={() => {
+                  setMobileQuickBranchesOpen((prev) => {
+                    const next = !prev;
+                    if (next) setMobileOpen(false);
+                    return next;
+                  });
+                }}
                 className={cn(
                   "inline-flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300",
                   scrolled
@@ -271,7 +277,13 @@ const Navbar = () => {
                 <MapPin size={22} />
               </motion.button>
               <motion.button
-                onClick={() => setMobileOpen(!mobileOpen)}
+                onClick={() => {
+                  setMobileOpen((prev) => {
+                    const next = !prev;
+                    if (next) setMobileQuickBranchesOpen(false);
+                    return next;
+                  });
+                }}
                 className={cn(
                   "inline-flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300",
                   scrolled
