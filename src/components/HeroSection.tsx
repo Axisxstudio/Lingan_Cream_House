@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Clock, IceCream, Sparkles, Heart } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import { cn } from "@/lib/utils";
 
@@ -70,13 +70,6 @@ function HeroWelcomeTypewriter() {
   );
 }
 
-const trustIndicators = [
-  { icon: Clock, label: "55+ Years Strong" },
-  { icon: IceCream, label: "50+ Menu Items" },
-  { icon: Sparkles, label: "Fresh Daily" },
-  { icon: Heart, label: "Family Favourite" },
-];
-
 const easeOutExpo: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const HeroSection = () => {
@@ -99,27 +92,6 @@ const HeroSection = () => {
       y: 0,
       transition: { duration: 0.58, ease: easeOutExpo },
     },
-  };
-
-  const trustBlock = {
-    hidden: { opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 22 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: reduceMotion
-        ? { duration: 0 }
-        : {
-            duration: 0.58,
-            ease: easeOutExpo,
-            staggerChildren: 0.08,
-            delayChildren: 0.05,
-          },
-    },
-  };
-
-  const trustCard = {
-    hidden: { opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 14 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: easeOutExpo } },
   };
 
   return (
@@ -190,7 +162,7 @@ const HeroSection = () => {
               for Three Generations
             </motion.h1>
 
-            <motion.div variants={heroFadeUp} className="mb-16 flex flex-nowrap gap-2 sm:gap-5">
+            <motion.div variants={heroFadeUp} className="mb-0 flex flex-nowrap gap-2 sm:gap-5">
               <motion.a
                 href="#menu"
                 className="btn-gradient flex-1 rounded-full px-4 py-3 text-center text-sm whitespace-nowrap sm:flex-none sm:px-10 sm:py-4 sm:text-base"
@@ -209,20 +181,6 @@ const HeroSection = () => {
               >
                 Find a Branch
               </motion.a>
-            </motion.div>
-
-            <motion.div variants={trustBlock} className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {trustIndicators.map((item) => (
-                <motion.div
-                  key={item.label}
-                  variants={trustCard}
-                  whileHover={reduceMotion ? {} : { y: -3, transition: { duration: 0.2 } }}
-                  className="flex items-center gap-2 bg-primary/25 border border-primary/35 backdrop-blur-md rounded-xl px-3 py-2 shadow-sm"
-                >
-                  <item.icon size={18} className="text-primary flex-shrink-0" />
-                  <span className="font-body text-xs sm:text-sm font-medium text-primary-foreground">{item.label}</span>
-                </motion.div>
-              ))}
             </motion.div>
           </motion.div>
         </div>
